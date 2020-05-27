@@ -1,0 +1,36 @@
+{
+  "name": "clarity-tutorials",
+  "version": "0.0.1",
+  "author": {
+    "name": "Mike Cohen",
+    "email": "mjoecohen@gmail.com"
+  },
+  "repository": "https://github.com/radicleart/clarity-market.git",
+  "private": true,
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "test": "mocha",
+    "test:watch": "mocha --watch",
+    "variables": "mocha 'test/variables.ts'",
+    "collectibles": "mocha 'test/collectibles.ts'",
+    "maps": "mocha 'test/maps.ts'",
+    "lists": "mocha 'test/lists.ts'"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "ts-node": "^8.2.0",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "@blockstack/clarity": "^0.1.13",
+    "@blockstack/clarity-native-bin": "^0.1.13",
+    "@blockstack/stacks-transactions": "^0.4.0",
+    "bn.js": "^5.1.1"
+  }
+}
