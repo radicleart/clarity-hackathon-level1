@@ -10,20 +10,19 @@ Goals / roadmap of this work are;
 * allow project (saas client) and platform to charge a small minting fee
 * add marketplace and auction functionality
 
-The specific amount of STX required to mint is project dependent and set by the project initiator.
+The specific amount of STX required to mint is project dependent and set by the project administrator.
 
-To keeps things modular functioanlity is split between two main contracts
+Functionality is delivered in the following modules;
 
 1. nongibles.clar
 2. projects.clar
 3. error-codes.clar
 
 Where `nongibles.clar` manages the minting of assets / collectibles and `projects.clar`
-handle project administration. The `error-codes.clar` cloud be a resource for defining common
-error handling across clarity community.
+handles project administration. Common erros are implemented by `error-codes.clar`.
 
-The smart contract will connect to a decentralised SaaS application we are building for art
-and collectible projects. The idea is inspired by the Open Sea platform and our work building radicleart and loopbomb using Blockstack.
+We hope to connect these smart contracts to a platform for digital collectible. The project is inspired
+by the Open Sea platform and our work building the radicle art and loopbomb d-apps.
 
 ## Unit Testing
 
@@ -33,7 +32,17 @@ git clone git@github.com:radicleart/clarity-hackathon-level1.git
 npm install
 ```
 
-Tested with node version `nvm use v12.16.3`
+(node version `nvm use v12.16.3`)
+
+test classes can be found in `test/unit/*.ts`
+
+```javascript
+npm run nongibles
+npm run projects
+```
+
+Note: nongibles tests currently fail because of current limitations in tooling around using
+`(contract-call?)` in unit test environment.
 
 ## Integration Testing
 
