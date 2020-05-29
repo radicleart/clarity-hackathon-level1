@@ -28,7 +28,7 @@ and collectible projects. The idea is inspired by the Open Sea platform and our 
 ## Unit Testing
 
 ```bash
-git clone git@github.com:radicleart/clarity-hackathon-level0.git
+git clone git@github.com:radicleart/clarity-hackathon-level1.git
 
 npm install
 ```
