@@ -1,4 +1,4 @@
-# Clarity Hackathon Level 0 2020
+# Clarity Hackathon Level 1 2020
 
 ## Minting Non Fungible Digital Collectibles
 
