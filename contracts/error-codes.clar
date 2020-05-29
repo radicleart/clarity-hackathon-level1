@@ -4,7 +4,7 @@
 (define-constant not-found (err 2))
 
 (define-public (err-not-allowed)
-  (err not-allowed))
+  (ok not-allowed))
 
 (define-public (err-not-found)
-  (err not-found))
+  (ok not-found))

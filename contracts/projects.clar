@@ -4,8 +4,11 @@
 ;; Constants
 ;; ---------
 (define-constant administrator 'ST1ESYCGJB5Z5NBHS39XPC70PGC14WAQK5XXNQYDW)
-(define-constant not-allowed (err 100))
-(define-constant not-found (err 200))
+(define-constant not-allowed u100)
+(define-constant not-found u100)
+;; uhu - error code 1000 means the error codes are not working - and out of time!!!!
+;; (define-constant not-allowed (unwrap! (contract-call? .error-codes err-not-allowed) (err 1000)))
+;; (define-constant not-found (unwrap! (contract-call? .error-codes err-not-found) (err 1000)))
 
 ;; Storage
 ;; -------
@@ -33,10 +36,10 @@
   (ok (unwrap! (get mint-fee (map-get? project-map {project-id: projectId})) (err 1)))
 )
 
-;; get the valmeta data for the given project
+;; get the meta data for the given project
 (define-public (get-project (projectId principal))
   (match (map-get? project-map {project-id: projectId})
-    myProject (ok myProject) (err 2)
+    myProject (ok myProject) (err not-found)
   )
 )
 
@@ -48,7 +51,7 @@
         (map-set project-map {project-id: projectId} ((base-url baseUrl) (mint-fee mintFee)))
         (ok projectId)
       )
-      (err 2)
+      (err not-allowed)
     )
   )
 )

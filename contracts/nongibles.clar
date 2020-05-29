@@ -16,11 +16,12 @@
 ;;      transfer fee from tx-sender to contract, 
 ;;      mint the token to tx-sender,
 ;;      call the projects contract to get the lookup the project
+;; TODO - tweak this to set the mint fee to the value fetched from 
 (define-public (mint-to (projectId int) (mint-fee uint) (assetHash (buff 32)))
   (begin
-    (contract-call? .projects get-project (as-contract tx-sender))
+    (unwrap! (contract-call? .projects get-project tx-sender) (err 1))
     (stx-transfer? 
-      ;; (default-to u1000 (unwrap! (contract-call? .projects get-project tx-sender) (eer 1))) tx-sender (as-contract tx-sender)
+      ;; (default-to u1000 )
        mint-fee tx-sender (as-contract tx-sender)
     )
     (nft-mint? nongibles assetHash tx-sender)

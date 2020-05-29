@@ -40,8 +40,8 @@ describe("projects tutorial test suite", () => {
       assert.equal(result.strings.length, 1);
     })
     it("should return error if no project found", async () => {
-      const result = await readFromContract(client, "get-project", [`'${project2Key}`]);
-      assert.isOk(result.rawResult.indexOf('err 2') > -1, "returns error: not found");
+      const result = await readFromContract(client, "get-project", [`'${project2Key}`], true);
+      assert.isOk(result.rawResult.indexOf('err u100') > -1, "returns error: not found");
       assert.equal(result.strings.length, 0);
     })
     it("should prevent update if project already exists", async () => {
