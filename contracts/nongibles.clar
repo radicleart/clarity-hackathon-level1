@@ -1,16 +1,23 @@
-;; Basic contract demonstrating minting of non fungible tokens - nongibles.
-
-;; This contract demonstrates;
+;; Project Administration
+;; ----------------------
+;; Contract demonstrating;
 ;;   minting of NFT tokens for a configurable amount of stax
 ;;   using contract-call to exteranlise commonly used code
+;;   linked list data structures to store assets for projects
 
-;; Non Fungible Token - clarity built in data structure
-(define-non-fungible-token nongibles (buff 32))
+;; Constants
+;; ---------
 (define-constant administrator 'ST1ESYCGJB5Z5NBHS39XPC70PGC14WAQK5XXNQYDW)
 
 ;; Storage
+;; -------
+;; Non Fungible Token - clarity built in data structure
+(define-non-fungible-token nongibles (buff 32))
 ;; nongible-project-map : list assets and projects - needs to be turned into a linked list
 (define-map nongible-project-map ((asset-hash (buff 32))) ((project-id int)))
+
+;; Public Functions
+;; ----------------
 
 ;; mint token: 
 ;;      transfer fee from tx-sender to contract, 
@@ -21,11 +28,9 @@
   (begin
     (unwrap! (contract-call? .projects get-project tx-sender) (err 1))
     (stx-transfer? 
-      ;; (default-to u1000 )
        mint-fee tx-sender (as-contract tx-sender)
     )
     (nft-mint? nongibles assetHash tx-sender)
-    ;; (contract-call? .projects get-project (as-contract tx-sender))
     (ok
       (map-set nongible-project-map {asset-hash: assetHash} ((project-id projectId)))
     )
@@ -61,3 +66,6 @@
 (define-public (get-address)
   (ok (as-contract tx-sender))
 )
+
+;; Private Functions
+;; ----------------

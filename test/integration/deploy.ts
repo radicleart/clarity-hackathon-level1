@@ -99,6 +99,10 @@ describe("Test minting functions", () => {
     let args = [intCV(0x100),  uintCV(0x5000), bufferCV(Buffer.from("aset1"))];
     let transaction = await callContract(new BigNum(0), "minter", "nongibles", "mint-to", args);
   });
+  it("should override the mint fee with the projects fee", async () => {
+    let args = [intCV(0x100),  uintCV(0x5000), bufferCV(Buffer.from("aset1"))];
+    let transaction = await callContract(new BigNum(0), "minter", "nongibles", "mint-to", args);
+  });
   it("should return a project for an asset", async () => {
     let args = [bufferCV(Buffer.from("aset1"))];
     let transaction = await callContract(new BigNum(0), "minter", "nongibles", "get-project-id", args);

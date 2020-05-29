@@ -1,5 +1,9 @@
 ;; Project Administration
 ;; ----------------------
+;; Projects are SaaS based clients of the platform. The platform provides
+;; a common interface for different arts and collectibles projects to
+;; to develop smart contract capabilities and provides maketplace and
+;; bidding functionality. 
 
 ;; Constants
 ;; ---------
@@ -13,10 +17,12 @@
 ;; Storage
 ;; -------
 ;; project-map
-;; params: 
-;;     base-url - url from where to read project meta data
-;;     mint-fee - fee 
+;;     base-url - for access to assets via project
+;;     mint-fee - project determined minting fee 
 (define-map project-map ((project-id principal)) ((base-url (buff 40)) (mint-fee uint)))
+
+;; Public functions
+;;-------------------
 
 ;; Add a new project - administrator level call.
 (define-public (add-project (projectId principal) (baseUrl (buff 40)) (mintFee uint))
@@ -56,17 +62,21 @@
   )
 )
 
-;; Only contract administrator can do these things.
-(define-private (is-create-allowed)
-  (is-eq tx-sender administrator)
-)
-
-;; Only contract administrator can do these things.
-(define-private (is-update-allowed (projectId principal))
-  (is-eq tx-sender projectId)
-)
-
 ;; sanity check the current contract address
 (define-public (get-address)
   (ok (as-contract tx-sender))
 )
+
+;; Private functions
+;;-------------------
+
+;; Only contract administrator can do these things
+(define-private (is-create-allowed)
+  (is-eq tx-sender administrator)
+)
+
+;; Allowed by if project admin is tex sender
+(define-private (is-update-allowed (projectId principal))
+  (is-eq tx-sender projectId)
+)
+
