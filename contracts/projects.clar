@@ -13,9 +13,7 @@
 ;; params: 
 ;;     base-url - url from where to read project meta data
 ;;     mint-fee - fee 
-(define-map project-map
-  ((project-id principal))
-  ((base-url (buff 40)) (mint-fee uint)))
+(define-map project-map ((project-id principal)) ((base-url (buff 40)) (mint-fee uint)))
 
 ;; Add a new project - administrator level call.
 (define-public (add-project (projectId principal) (baseUrl (buff 40)) (mintFee uint))
@@ -30,6 +28,12 @@
   )
 )
 
+;; get the minting fee for this project
+(define-public (get-mint-fee (projectId principal))
+  (ok (unwrap! (get mint-fee (map-get? project-map {project-id: projectId})) (err 1)))
+)
+
+;; get the valmeta data for the given project
 (define-public (get-project (projectId principal))
   (match (map-get? project-map {project-id: projectId})
     myProject (ok myProject) (err 2)

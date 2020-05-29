@@ -31,7 +31,7 @@ describe("projects tutorial test suite", () => {
       const result = await readFromContract(client, "get-address", []);
       assert.isOk(result.rawResult.indexOf(contractKey) > -1);
     })
-    it("1. should allow insert if tx-sender is contract owner", async () => {
+    it("should allow insert if tx-sender is contract owner", async () => {
       let txreceive = await execMethod(client, contractKey, "add-project", [ `'${project1Key}`, "\"http://project1.com/assets/v1\"","u5000"]);
       assert.isOk(txreceive.success, "Transaction succeeded");
       const result = await readFromContract(client, "get-project", [`'${project1Key}`]);
@@ -39,12 +39,12 @@ describe("projects tutorial test suite", () => {
       assert.equal(result.strings[0], "http://project1.com/assets/v1");
       assert.equal(result.strings.length, 1);
     })
-    it("2. should return error if no project found", async () => {
+    it("should return error if no project found", async () => {
       const result = await readFromContract(client, "get-project", [`'${project2Key}`]);
       assert.isOk(result.rawResult.indexOf('err 2') > -1, "returns error: not found");
       assert.equal(result.strings.length, 0);
     })
-    it("3. should prevent update if project already exists", async () => {
+    it("should prevent update if project already exists", async () => {
       let txreceive = await execMethod(client, contractKey, "add-project", [ `'${project1Key}`, "\"http://apples.com/assets/v1\"","u7000"]);
       assert.isOk(txreceive.success, "Transaction succeeded");
       const result = await readFromContract(client, "get-project", [`'${project1Key}`]);
@@ -52,11 +52,15 @@ describe("projects tutorial test suite", () => {
       assert.equal(result.strings[0], "http://project1.com/assets/v1");
       assert.equal(result.strings.length, 1);
     })
-    it("4. should prevent insert when tx signer not contract owner", async () => {
+    it("should get the minting fee of the project", async () => {
+      const result = await readFromContract(client, "get-mint-fee", [`'${project1Key}`], true);
+      assert.isOk(result.rawResult === '(ok u5000)', "Ensure mint price is returned");
+    })
+    it("should prevent insert when tx signer not contract owner", async () => {
       let txreceive = await execMethod(client, project1Key, "add-project", [ `'${project1Key}`, "\"http://apples.com/assets/v1\"","u7000"]);
       assert.isNotOk(txreceive.success, "Transaction failed");
     })
-    it("5. should allow insert of new project", async () => {
+    it("should allow insert of new project", async () => {
       let txreceive = await execMethod(client, contractKey, "add-project", [ `'${project2Key}`, "\"http://project2.com/assets/v1\"","u10000"]);
       assert.isOk(txreceive.success, "Transaction failed");
       const result = await readFromContract(client, "get-project", [`'${project2Key}`]);
@@ -64,7 +68,7 @@ describe("projects tutorial test suite", () => {
       assert.equal(result.strings[0], "http://project2.com/assets/v1");
       assert.equal(result.strings.length, 1);
     })
-    it("6. should allow update of existing project only if tx signer is project owner", async () => {
+    it("should allow update of existing project only if tx signer is project owner", async () => {
       let txreceive = await execMethod(client, project2Key, "update-project", [ `'${project2Key}`, "\"http://project2.com/assets/v2\"","u8000"]);
       assert.isOk(txreceive.success, "Transaction failed");
       const result = await readFromContract(client, "get-project", [`'${project2Key}`]);

@@ -36,7 +36,7 @@ async function deployContract(contractName: string, nonce): Promise<Object> {
     network,
   });
   await broadcastTransaction(transaction, network);
-  await new Promise((r) => setTimeout(r, 20000));
+  await new Promise((r) => setTimeout(r, 30000));
   return transaction;
 }
 async function callContract(nonce, sender: string, contractName: string, functionName: string, functionArgs: ClarityValue[]): Promise<StacksTransaction> {
