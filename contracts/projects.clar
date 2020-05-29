@@ -3,9 +3,9 @@
 
 ;; Constants
 ;; ---------
-(define-constant administrator 'ST18PE05NG1YN7X6VX9SN40NZYP7B6NQY6C96ZFRC)
-(define-constant not-allowed (err 1))
-(define-constant not-found (err 2))
+(define-constant administrator 'ST1ESYCGJB5Z5NBHS39XPC70PGC14WAQK5XXNQYDW)
+(define-constant not-allowed (err 100))
+(define-constant not-found (err 200))
 
 ;; Storage
 ;; -------
@@ -30,6 +30,12 @@
   )
 )
 
+(define-public (get-project (projectId principal))
+  (match (map-get? project-map {project-id: projectId})
+    myProject (ok myProject) (err 2)
+  )
+)
+
 ;; Update new project - project owner level call.
 (define-public (update-project (projectId principal) (baseUrl (buff 40)) (mintFee uint))
   (begin
@@ -38,14 +44,8 @@
         (map-set project-map {project-id: projectId} ((base-url baseUrl) (mint-fee mintFee)))
         (ok projectId)
       )
-      (err not-allowed)
+      (err 2)
     )
-  )
-)
-
-(define-read-only (get-project (projectId principal))
-  (match (map-get? project-map {project-id: projectId})
-    myProject (ok myProject) (err not-found)  
   )
 )
 
@@ -57,4 +57,9 @@
 ;; Only contract administrator can do these things.
 (define-private (is-update-allowed (projectId principal))
   (is-eq tx-sender projectId)
+)
+
+;; sanity check the current contract address
+(define-public (get-address)
+  (ok (as-contract tx-sender))
 )

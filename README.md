@@ -2,18 +2,28 @@
 
 ## Minting Non Fungible Digital Collectibles
 
-This contract allows non fungible tokens to be minted in exchange for a small quantity of STX.
+Goals / roadmap of this work are;
+
+* define digital assets as a space of sha 256 hashes (of collectibles / artwork)
+* define projects as spaces of digital assets
+* mint digital collectibles to owners addresses
+* allow project (saas client) and platform to charge a small minting fee
+* add marketplace and auction functionality
+
 The specific amount of STX required to mint is project dependent and set by the project initiator.
-The contract is inspired by the Open Sea platform and our work building radicleart and loopbomb
-apps on Blockstack tech.
-The main goals here are;
 
-* minting of digital collectibles
-* cost of minting is configurable per project
+To keeps things modular functioanlity is split between two main contracts
 
-This contract connects with ongoing d-app  where project meta data and collectibles and other digital assets
-are stored decentrally using Gaia hubs. For this purpose digital collectibles is considered to be a space of SHA 256 hashes
-which secure the collectible itself and or its provenance (ownership history) data.
+1. nongibles.clar
+2. projects.clar
+3. error-codes.clar
+
+Where `nongibles.clar` manages the minting of assets / collectibles and `projects.clar`
+handle project administration. The `error-codes.clar` cloud be a resource for defining common
+error handling across clarity community.
+
+The smart contract will connect to a decentralised SaaS application we are building for art
+and collectible projects. The idea is inspired by the Open Sea platform and our work building radicleart and loopbomb using Blockstack.
 
 ## Unit Testing
 
@@ -54,10 +64,44 @@ Check balances and contract deployment using the API;
 * Contract Balance: http://127.0.0.1:20443/v2/accounts/STFJEDEQB1Y1CQ7F04CS62DCS5MXZVSNXXN413ZG
 * Contract Source: http://127.0.0.1:20443/v2/contracts/source/ST18PE05NG1YN7X6VX9SN40NZYP7B6NQY6C96ZFRC/collectibles
 
+## Issues
+
+### Error Running Sidecar
+
+```bash
+$ npm run dev:integrated
+
+> @blockstack/stacks-blockchain-sidecar@1.0.0 dev:integrated /Users/mikey/hubgit/blockstack/stacks-blockchain-sidecar
+> npm run generate:schemas && npm run devenv:build && concurrently npm:dev npm:devenv:deploy
+
+npm ERR! missing script: generate:schemas
+```
+
+### Unable to Call Read Only Functions
+
+The problem  with the sidecar combined with not being able to find a way to call read only functions
+using `makeContractCall` meant I wasn't quite able to read state from the chain and get the tests into
+the correct shape.
+
+```javascript
+  var transaction = await makeContractCall({
+    contractAddress: keys['contract-base'].stacksAddress,
+    contractName,
+    functionName,
+    functionArgs,
+    fee,
+    senderKey: keys[sender].secretKey,
+    nonce,
+    network,
+  });
+  var result = await broadcastTransaction(transaction, network);
+```
+
 ## References
 
 * [Blockstack Clarity Documentation](https://docs.blockstack.org/core/smart/rpc-api.html)
 * [Stacks Transactions JS Library](https://github.com/blockstack/stacks-transactions-js)
 * [Stacks Blockchain](https://github.com/blockstack/stacks-blockchain)
+* [Stacks Blockchain Sidecar](https://github.com/blockstack/stacks-blockchain-sidecar)
 * [Clarity JS SDK](https://github.com/blockstack/clarity-js-sdk)
 * [Clarity VSCode](https://github.com/blockstack/clarity-vscode)
