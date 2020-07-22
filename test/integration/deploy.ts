@@ -32,7 +32,7 @@ async function deployContract(contractName: string, nonce): Promise<Object> {
     codeBody,
     fee,
     senderKey: keys['contract-base'].secretKey, // using same key allows contract-call?
-    nonce: nonce,   // watch for nonce increments if this works - may need to restart mocknet!
+    // nonce: nonce,   // watch for nonce increments if this works - may need to restart mocknet!
     network,
   });
   await broadcastTransaction(transaction, network);
