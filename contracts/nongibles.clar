@@ -1,7 +1,7 @@
 ;; Project Administration
 ;; ----------------------
 ;; Contract demonstrating;
-;;   minting of NFT tokens for a configurable amount of stax
+;;   minting of NFT tokens for a configurable amount of STX
 ;;   using contract-call to exteranlise commonly used code
 ;;   linked list data structures to store assets for projects
 
