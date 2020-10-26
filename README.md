@@ -46,8 +46,7 @@ Note: nongibles tests currently fail because of current limitations in tooling a
 
 ## Integration Testing
 
-Testing of this contract requires integration testing on the stacks mocknet. A high level description is presented below
-but most of the details were worked out by  [Friedger](https://github.com/friedger/clarity-smart-contracts) in Blockstack Community
+Testing of this contract requires integration testing on the stacks mocknet. A high level description is presented below but most of the details were worked out by  [Friedger](https://github.com/friedger/clarity-smart-contracts) in Blockstack Community
 so please head over there and check out his `escrow` contract for full details.
 
 Generate two key sets using

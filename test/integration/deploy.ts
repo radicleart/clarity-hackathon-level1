@@ -16,6 +16,7 @@ import {
 const BigNum = require("bn.js"); 
 const network = new StacksTestnet();
 const fee = new BigNum(3000);
+const port = 20443;
 const keys = {
   'contract-base': JSON.parse(fs.readFileSync("./keys-contract-base.json").toString()),
   'minter': JSON.parse(fs.readFileSync("./keys-minter.json").toString()),
@@ -25,7 +26,7 @@ const keys = {
 
 async function deployContract(contractName: string, nonce): Promise<Object> {
   console.log("deploying contract: " + contractName);
-  network.coreApiUrl = "http://localhost:20443";
+  network.coreApiUrl = "http://localhost:" + port;
   const codeBody = fs.readFileSync("./contracts/" + contractName + ".clar").toString();
   var transaction = await makeSmartContractDeploy({
     contractName,

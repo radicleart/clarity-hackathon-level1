@@ -5,17 +5,13 @@ import * as fs from "fs";
 import {
   makeSmartContractDeploy,
   makeContractCall,
-  TransactionVersion,
-  FungibleConditionCode,
   uintCV,
-  ChainID,
-  makeStandardSTXPostCondition,
-  makeContractSTXPostCondition,
   StacksTestnet,
   broadcastTransaction,
 } from "@blockstack/stacks-transactions";
 const BigNum = require("bn.js"); 
-const STACKS_API_URL = "http://localhost:20443";
+const port = 3999;
+const STACKS_API_URL = "http://localhost:" + port;
 describe("nongibles tutorial test suite", () => {
   describe("Deploying an instance of the contract", () => {
     it("should mint a non fungible token", async () => {
